@@ -1,0 +1,17 @@
+# Use an official Python runtime as a parent image
+FROM python:3.11
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy all project files into the container
+COPY . .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the backend port
+EXPOSE 5000
+
+# Command to run the Flask application
+CMD ["python", "./dns_anal_back.py"]

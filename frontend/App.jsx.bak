@@ -1,0 +1,283 @@
+import React, { useState, useEffect } from "react";
+
+const App = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadMessage, setUploadMessage] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [data, setData] = useState(null);
+  const [processing, setProcessing] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleFileChange = (event) => setSelectedFile(event.target.files[0]);
+
+  const uploadFile = async () => {
+    if (!selectedFile) return alert("Please select a file first.");
+  
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+  
+    try {
+      const response = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!response.ok) throw new Error("Upload failed");
+  
+      const result = await response.json();
+      setUploadMessage(result.message);
+    } catch (error) {
+      setUploadMessage("Upload error: " + error.message);
+    }
+  };
+  
+  const startProcessing = async () => {
+    setProcessing(true);
+    setProgress(0);
+
+    await fetch("http://localhost:5000/start-processing", { method: "POST" });
+
+    const interval = setInterval(async () => {
+      const response = await fetch("http://localhost:5000/progress");
+      const result = await response.json();
+      setProgress(result.progress);
+
+      if (result.status === "complete" || result.status === "error") {
+        clearInterval(interval);
+        fetchResults();
+        setProcessing(false);
+      }
+    }, 1000);
+  };
+
+  const fetchResults = async () => {
+    const response = await fetch("http://localhost:5000/results");
+    if (response.ok) {
+      const jsonData = await response.json();
+      setData(jsonData);
+    } else {
+      setData(null);
+    }
+  };
+
+  return (
+    // <div className="min-h-screen bg-gray-900 text-gray-300 p-6">
+    //   {/* <h1 className="text-3xl font-bold mb-6">DNS Log Analyzer</h1> */}
+
+    //   <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+    //     <input type="file" onChange={handleFileChange} className="mb-3" />
+    //     <button
+    //       onClick={uploadFile}
+    //       className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2"
+    //     >
+    //       Upload
+    //     </button>
+    //     {uploadMessage && <p className="mt-2">{uploadMessage}</p>}
+    //   </div>
+
+    //   <div className="mt-6">
+    //     <button
+    //       onClick={startProcessing}
+    //       disabled={processing}
+    //       className="bg-green-500 text-white px-4 py-2 rounded-lg"
+    //     >
+    //       Start Processing
+    //     </button>
+    //   </div>
+
+    //   <div className="mt-4">
+    //     <div className="bg-gray-700 w-full h-4 rounded-lg overflow-hidden">
+    //       <div
+    //         className="bg-blue-500 h-full"
+    //         style={{ width: `${progress}%` }}
+    //       ></div>
+    //     </div>
+    //     <p className="mt-2">Progress: {progress}%</p>
+    //   </div>
+
+    //   {data && (
+    //     <div className="mt-6">
+    //       <h2 className="text-2xl font-semibold mb-4">Results</h2>
+    //       <input
+    //         type="text"
+    //         placeholder="Search domain..."
+    //         className="bg-gray-700 p-2 rounded-lg w-full mb-4"
+    //         onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+    //       />
+    //       <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+    //         {Object.entries(data).map(([sld, details]) => (
+    //           <div key={sld} className="mb-6">
+    //             <h3 className="text-xl font-semibold text-blue-400">{sld}</h3>
+    //             <pre className="text-gray-300 text-sm">
+    //               {details.whois.slice(0, 10).join("\n") + "..."}
+    //             </pre>
+    //             <div className="mt-2 ml-4">
+    //               {Object.entries(details.domains)
+    //                 .filter(([domain]) => domain.includes(searchTerm))
+    //                 .map(([domain, ips]) => (
+    //                   <div key={domain} className="bg-gray-700 p-3 rounded mt-2">
+    //                     <div className="font-medium">{domain}</div>
+    //                     <ul className="list-disc ml-6">
+    //                       {ips.map((ip) => (
+    //                         <li key={ip}>{ip}</li>
+    //                       ))}
+    //                     </ul>
+    //                   </div>
+    //                 ))}
+    //             </div>
+    //           </div>
+    //         ))}
+    //       </div>
+    //     </div>
+    //   )}
+    // </div>
+    // <div className="flex items-center justify-center min-h-screen bg-gray-900 text-gray-300">
+    //   <div className="w-full max-w-3xl bg-gray-800 p-6 rounded-lg shadow-lg">
+    //   <h1 class="text-3xl font-bold text-blue-400">Welcome to DNS Log Analyzer</h1>
+    //   {/* <h2 class="text-3xl font-bold text-blue-400">Analyze your DNS logs effortlessly.</h2> */}
+    //   <p class="mt-2 text-gray-400">Analyze your DNS logs effortlessly.</p>
+
+    //     <div className="flex flex-col items-center mb-6">
+    //     <input type="file" onChange={handleFileChange} className="mb-3 bg-gray-700 text-white px-4 py-2 rounded-lg cursor-pointer shadow-md" />
+    //       <button
+    //         onClick={uploadFile}
+    //         className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2"
+    //       >
+    //         Upload
+    //       </button>
+    //       {uploadMessage && <p className="mt-2">{uploadMessage}</p>}
+    //     </div>
+
+    //     <div className="text-center">
+    //       <button
+    //         onClick={startProcessing}
+    //         disabled={processing}
+    //         className="bg-green-500 text-white px-4 py-2 rounded-lg"
+    //       >
+    //         Start Processing
+    //       </button>
+    //     </div>
+
+    //     <div className="mt-4">
+    //       <div className="bg-gray-700 w-full h-4 rounded-lg overflow-hidden">
+    //         <div
+    //           className="bg-blue-500 h-full"
+    //           style={{ width: `${progress}%` }}
+    //         ></div>
+    //       </div>
+    //       <p className="mt-2 text-center">Progress: {progress}%</p>
+    //     </div>
+
+    //     {data && (
+    //       <div className="mt-6">
+    //         <h2 className="text-2xl font-semibold mb-4 text-center">Results</h2>
+    //         <input
+    //           type="text"
+    //           placeholder="Search domain..."
+    //           className="bg-gray-700 p-2 rounded-lg w-full mb-4"
+    //           onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+    //         />
+    //         <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+    //           {Object.entries(data).map(([sld, details]) => (
+    //             <div key={sld} className="mb-6">
+    //               <h3 className="text-xl font-semibold text-blue-400 text-center">{sld}</h3>
+    //               <pre className="text-gray-300 text-sm">
+    //                 {details.whois ? details.whois.slice(0, 10).join("\n") + "..." : "No WHOIS data"}
+    //               </pre>
+    //               <div className="mt-2">
+    //                 {Object.entries(details.domains || {})
+    //                   .filter(([domain]) => domain.includes(searchTerm))
+    //                   .map(([domain, ips]) => (
+    //                     <div key={domain} className="bg-gray-700 p-3 rounded mt-2">
+    //                       <div className="font-medium">{domain}</div>
+    //                       <ul className="list-disc ml-6">
+    //                         {ips.map((ip) => (
+    //                           <li key={ip}>{ip}</li>
+    //                         ))}
+    //                       </ul>
+    //                     </div>
+    //                   ))}
+    //               </div>
+    //             </div>
+    //           ))}
+    //         </div>
+    //       </div>
+    //     )}
+    //   </div>
+    // </div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-900 text-gray-300">
+      <div className="w-full max-w-3xl bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold text-center mb-6">DNS Log Analyzer</h1>
+        
+        <div className="flex flex-col items-center mb-6">
+          <input type="file" onChange={handleFileChange} className="mb-3 bg-gray-700 text-white px-4 py-2 rounded-lg cursor-pointer shadow-md" />
+          <button
+            onClick={uploadFile}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2"
+          >
+            Upload
+          </button>
+          {uploadMessage && <p className="text-center mt-2 text-gray-400">{uploadMessage}</p>}
+        </div>
+
+        <div className="text-center">
+          <button
+            onClick={startProcessing}
+            disabled={processing}
+            className="bg-green-500 text-white px-4 py-2 rounded-lg"
+          >
+            Start Processing
+          </button>
+        </div>
+
+        <div className="mt-4">
+          <div className="bg-gray-700 w-full h-4 rounded-lg overflow-hidden">
+            <div
+              className="bg-blue-500 h-full"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+          <p className="text-center mt-2 text-gray-400">Progress: {progress}%</p>
+        </div>
+
+        {data && (
+          <div className="mt-6">
+            <h2 className="text-2xl font-semibold mb-4 text-center">Results</h2>
+            <input
+              type="text"
+              placeholder="Search domain..."
+              className="bg-gray-700 p-2 rounded-lg w-full mb-4"
+              onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+            />
+            <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+              {Object.entries(data).map(([sld, details]) => (
+                <div key={sld} className="mb-6">
+                  <h3 className="text-xl font-semibold text-blue-400 text-center">{sld}</h3>
+                  <pre className="text-gray-300 text-sm">
+                    {details.whois ? details.whois.slice(0, 10).join("\n") + "..." : "No WHOIS data"}
+                  </pre>
+                  <div className="mt-2">
+                    {Object.entries(details.domains || {})
+                      .filter(([domain]) => domain.includes(searchTerm))
+                      .map(([domain, ips]) => (
+                        <div key={domain} className="bg-gray-700 p-3 rounded mt-2">
+                          <div className="font-medium">{domain}</div>
+                          <ul className="list-disc ml-6">
+                            {ips.map((ip) => (
+                              <li key={ip}>{ip}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default App;
