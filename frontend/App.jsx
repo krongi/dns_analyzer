@@ -82,12 +82,14 @@ const handleFileChange = (event) => {
   };
 
   const startProcessing = async () => {
+    if (!selectedFile) return;
     setProcessing(true);
     setProgress(0);
     setCurrentStep('Starting processing...');
   
     try {
-      const response = await fetch(`${API_BASE}/start-processing`, {method: "POST" , headers: {'Content-Type': 'application/json',},body: JSON.stringify({trigger: true}),});
+      // const response = await fetch(`${API_BASE}/start-processing`, {method: "POST" , headers: {'Content-Type': 'application/json',},body: JSON.stringify({trigger: true}),});
+      const response = await fetch(`${API_BASE}/start-processing`, {method: "POST", headers: {'Content-Type': 'text/plain', body: selectedFile,},});
       if (!response.ok) throw new Error("Failed to start processing");
     } catch (error) {
       console.error("Error starting processing:", error);

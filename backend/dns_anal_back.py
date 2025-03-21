@@ -18,8 +18,8 @@ def read_progress():
 app = Flask(__name__)
 CORS(app, origins="*")
 
-UPLOAD_FOLDER = "uploads"
-RESULT_FOLDER = "results"
+UPLOAD_FOLDER = "./uploads"
+RESULT_FOLDER = "./results"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
 
@@ -69,15 +69,20 @@ def get_processed_result():
 
 @app.route("/start-processing", methods=["POST"])
 def start_processing():
-    """Start log processing asynchronously"""
-    if not log_file_name:
-        return jsonify({"error": "No file uploaded"}), 400
+    filename = request.data.decode('utf-8')
+    print(f"Processing file: {filename}")
+    filepath = os.path.join(UPLOAD_FOLDER, filename)
+    if not os.path.exists(filepath):
+        return jsonify({'error': 'File not found'}), 404
+
+    # process the file...
     try:
         threading.Thread(target=process_log_file, args=(log_file_name,)).start()
         return jsonify({"message": "Processing started"})
     except:
         return jsonify({"error": str(e)}), 500
 
+   
 @app.route("/progress", methods=["GET"])
 def progress():
     """Get processing progress"""
@@ -91,8 +96,8 @@ def list_results():
         key=lambda x: os.path.getmtime(os.path.join(RESULT_FOLDER, x)),
         reverse=True
     )
-    print("Serving result filenames:", result_files)  # Debugging Output
-    return jsonify({"files": result_files})  # ✅ Returns filenames instead of file contents
+    print("Serving result filenames:", result_files)  
+    return jsonify({"files": result_files}) 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="0.0.0.0", port="5000", debug=True)
