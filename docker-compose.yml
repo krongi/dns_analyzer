@@ -10,8 +10,8 @@ services:
       - "5678:5678"
     volumes:
       - ./backend:/app
-      - uploads:/app/uploads
-      - results:/app/results
+      - uploads:/data/uploads
+      - results:/data/results
     environment:
       - FLASK_ENV=development
     restart: always
@@ -26,8 +26,8 @@ services:
       - "8080:80"
     volumes:
       - ./frontend:/app
-      - uploads:/app/uploads
-      - results:/app/results
+      - uploads:/data/uploads
+      - results:/data/results
     depends_on:
       - backend
     restart: always

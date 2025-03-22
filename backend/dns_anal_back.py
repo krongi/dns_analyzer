@@ -18,8 +18,8 @@ def read_progress():
 app = Flask(__name__)
 CORS(app, origins="*")
 
-UPLOAD_FOLDER = "./uploads"
-RESULT_FOLDER = "./results"
+UPLOAD_FOLDER = "/data/uploads"
+RESULT_FOLDER = "/data/results"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
 

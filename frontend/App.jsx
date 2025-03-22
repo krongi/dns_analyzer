@@ -10,6 +10,7 @@ const App = () => {
   const [processing, setProcessing] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedItems, setExpandedItems] = useState({});
+  const [fileUploaded, setFileUploaded] = useState(false);
 
   const API_BASE = "http://10.10.1.26:5000";
 
@@ -59,25 +60,27 @@ const handleFileChange = (event) => {
 
   const uploadFile = async () => {
     if (!selectedFile) return alert("Please select a file first.");
-  
+
     const formData = new FormData();
     formData.append("file", selectedFile);
-  
+
     try {
       const response = await fetch(`${API_BASE}/upload`, {
         method: "POST",
         body: formData,
       });
-  
+
       if (!response.ok) throw new Error("Upload failed");
-  
+
       const result = await response.json();
       setUploadMessage(result.message);
-
+      setFileUploaded(true);
       // ✅ Refresh results after upload
       fetchResults();
     } catch (error) {
       setUploadMessage("Upload error: " + error.message);
+      setFileUploaded(false);
+
     }
   };
 
@@ -86,7 +89,7 @@ const handleFileChange = (event) => {
     setProcessing(true);
     setProgress(0);
     setCurrentStep('Starting processing...');
-  
+
     try {
       // const response = await fetch(`${API_BASE}/start-processing`, {method: "POST" , headers: {'Content-Type': 'application/json',},body: JSON.stringify({trigger: true}),});
       const response = await fetch(`${API_BASE}/start-processing`, {method: "POST", headers: {'Content-Type': 'text/plain', body: selectedFile,},});
@@ -96,7 +99,7 @@ const handleFileChange = (event) => {
       setProcessing(false);
       return;
     }
-  
+
     const interval = setInterval(async () => {
       try {
         const response = await fetch(`${API_BASE}/progress`);
@@ -104,12 +107,26 @@ const handleFileChange = (event) => {
         const result = await response.json();
         setProgress(result.progress || 0);
         setCurrentStep(result.message || 'Processing...');
-  
+
+        // if (result.progress >= 100) {
+        //   clearInterval(interval);
+        //   fetchResults(); // ✅ Refresh results after processing
+        //   setProcessing(false);
+        // }
         if (result.progress >= 100) {
           clearInterval(interval);
-          fetchResults(); // ✅ Refresh results after processing
+          await fetchResults();
+
+          // Automatically select the most recent result
+          if (uploadedFiles.length > 0) {
+            const latestFile = uploadedFiles[0];
+            await handleFileSelection(latestFile);
+          }
+
           setProcessing(false);
         }
+
+
       } catch (error) {
         console.error("Error fetching progress:", error);
         setProgress(0);
@@ -126,23 +143,35 @@ const handleFileChange = (event) => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900 text-gray-300 overflow-hidden">
-      <div className="w-full max-w-3xl bg-gray-800 p-6 rounded-lg shadow-lg overflow-y-auto max-h-screen">
-        <h1 className="text-3xl font-bold text-center mb-6">DNS Log Analyzer</h1>
-        
-        <div className="flex flex-col items-center mb-6">
-          <select onChange={(e) => handleFileSelection(e.target.value)} className="mb-3 bg-gray-700 text-white px-4 py-2 rounded-lg cursor-pointer shadow-md">
-            <option value="">Select a previously processed analysis</option>
-            {uploadedFiles.length === 0 && <option disabled>No files available</option>}
-            {uploadedFiles.map((file, index) => (
-              <option key={index} value={file}>{file}</option>
-            ))}
-          </select>
-        </div>
+      <div className="w=2/3 bg-gray-800 p-6 rounded-lg shadow-lg overflow-y-auto max-h-screen">
 
-        <input type="file" onChange={handleFileChange} className="mb-3 bg-gray-700 text-white px-4 py-2 rounded-lg cursor-pointer shadow-md" />
-        <button onClick={uploadFile} className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2">
-          Upload
-        </button>
+
+        <h1 className="text-3xl font-bold text-center mb-6">DNS Log Analyzer</h1>
+
+        <div className="flex flex-col items-center mb-6">
+  <select
+    onChange={(e) => handleFileSelection(e.target.value)}
+    className="mb-3 bg-gray-700 text-white px-4 py-2 rounded-lg cursor-pointer shadow-md">
+    <option value="">Select a previously processed analysis</option>
+    {uploadedFiles.length === 0 && <option disabled>No files available</option>}
+    {uploadedFiles.map((file, index) => (
+      <option key={index} value={file}>{file}</option>
+    ))}
+  </select>
+  <div className="flex flex-col items-center mb-6">
+  <input
+    type="file"
+    onChange={handleFileChange}
+    className="mb-3 bg-gray-700 text-white px-4 py-2 rounded-lg cursor-pointer shadow-md"
+  />
+  <button
+    onClick={uploadFile}
+    className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+    Upload
+  </button>
+  </div>
+</div>
+
         {uploadMessage && <p className="text-center mt-2 text-gray-400">{uploadMessage}</p>}
 
         <div className="text-center">
@@ -168,12 +197,25 @@ const handleFileChange = (event) => {
                   {expandedItems[sld] ? "▼ " : "▶ "}{sld}
                 </button>
                 {expandedItems[sld] && (
-                  <div className="mt-2">
-                    <pre className="text-gray-300 text-sm">
-                      {details.whois ? details.whois.slice(0, 10).join("\n") + "..." : "No WHOIS data"}
-                    </pre>
-                  </div>
-                )}
+  <div className="mt-2">
+    <pre className="text-gray-300 text-sm mb-2">
+      {details.whois ? details.whois.slice(0, 10).join("\n") + "..." : "No WHOIS data"}
+    </pre>
+
+    {Object.entries(details.domains || {}).map(([domain, ips]) => (
+      <div key={domain} className="bg-gray-600 p-2 rounded mt-2">
+        <div className="font-medium">{domain}</div>
+        <ul className="list-disc ml-6 text-sm text-gray-200">
+          {ips.map((ip) => (
+            <li key={ip}>{ip}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+)}
+
+
               </div>
             ))}
           </div>
