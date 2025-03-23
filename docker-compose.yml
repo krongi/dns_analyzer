@@ -10,9 +10,11 @@ services:
       - "5678:5678"
     volumes:
       - ./backend:/app
-      - uploads:/data/uploads
-      - results:/data/results
+      - ./uploads:/app/uploads
+      - ./results:/app/results
     environment:
+      - PUID=1000
+      - PGID=1000
       - FLASK_ENV=development
     restart: always
 
@@ -26,10 +28,13 @@ services:
       - "8080:80"
     volumes:
       - ./frontend:/app
-      - uploads:/data/uploads
-      - results:/data/results
+      - ./uploads:/app/uploads
+      - ./results:/app/results
     depends_on:
       - backend
+    environment:
+      - PUID=1000
+      - PGID=1000
     restart: always
 
 volumes:

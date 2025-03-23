@@ -18,8 +18,8 @@ def read_progress():
 app = Flask(__name__)
 CORS(app, origins="*")
 
-UPLOAD_FOLDER = "/data/uploads"
-RESULT_FOLDER = "/data/results"
+UPLOAD_FOLDER = "/app/uploads"
+RESULT_FOLDER = "/app/results"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
 
@@ -27,7 +27,7 @@ log_file_name = None
 
 def process_log_file(filename):
     """Process the log file asynchronously"""
-    log_file_path = os.path.join(UPLOAD_FOLDER, filename)
+    log_file_path = os.path.join(UPLOAD_FOLDER, str(filename))
     if not os.path.exists(log_file_path):
         print(f"Error: Log file {log_file_path} does not exist!")
         return
@@ -100,4 +100,4 @@ def list_results():
     return jsonify({"files": result_files}) 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000", debug=True)
+    app.run(host="0.0.0.0", port="5000")

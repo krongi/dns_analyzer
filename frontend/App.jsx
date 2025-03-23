@@ -11,6 +11,8 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedItems, setExpandedItems] = useState({});
   const [fileUploaded, setFileUploaded] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
 
   const API_BASE = "http://10.10.1.26:5000";
 
@@ -58,30 +60,70 @@ const handleFileChange = (event) => {
   }
 };
 
-  const uploadFile = async () => {
-    if (!selectedFile) return alert("Please select a file first.");
+  // const uploadFile = async () => {
+  //   if (!selectedFile) return alert("Please select a file first.");
 
+  //   const formData = new FormData();
+  //   formData.append("file", selectedFile);
+
+  //   try {
+  //     const response = await fetch(`${API_BASE}/upload`, {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+
+  //     if (!response.ok) throw new Error("Upload failed");
+
+  //     const result = await response.json();
+  //     setUploadMessage(result.message);
+  //     setFileUploaded(true);
+  //     // ✅ Refresh results after upload
+  //     fetchResults();
+  //   } catch (error) {
+  //     setUploadMessage("Upload error: " + error.message);
+  //     setFileUploaded(false);
+
+  //   }
+  // };
+
+  const uploadFile = () => {
+    if (!selectedFile) return alert("Please select a file first.");
+  
     const formData = new FormData();
     formData.append("file", selectedFile);
-
-    try {
-      const response = await fetch(`${API_BASE}/upload`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error("Upload failed");
-
-      const result = await response.json();
-      setUploadMessage(result.message);
-      setFileUploaded(true);
-      // ✅ Refresh results after upload
-      fetchResults();
-    } catch (error) {
-      setUploadMessage("Upload error: " + error.message);
+  
+    const xhr = new XMLHttpRequest();
+  
+    xhr.open("POST", "http://localhost:5000/upload", true);
+  
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percentComplete = Math.round((event.loaded / event.total) * 100);
+        setUploadProgress(percentComplete);
+      }
+    };
+  
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const result = JSON.parse(xhr.responseText);
+        setUploadMessage(result.message);
+        setFileUploaded(true);
+        setUploadProgress(100);
+        fetchResults();
+      } else {
+        setUploadMessage("Upload failed");
+        setFileUploaded(false);
+        setUploadProgress(0);
+      }
+    };
+  
+    xhr.onerror = () => {
+      setUploadMessage("Upload error");
       setFileUploaded(false);
-
-    }
+      setUploadProgress(0);
+    };
+  
+    xhr.send(formData);
   };
 
   const startProcessing = async () => {
@@ -158,6 +200,7 @@ const handleFileChange = (event) => {
       <option key={index} value={file}>{file}</option>
     ))}
   </select>
+  <p>look im gay</p>
   <div className="flex flex-col items-center mb-6">
   <input
     type="file"
@@ -169,7 +212,20 @@ const handleFileChange = (event) => {
     className="bg-blue-500 text-white px-4 py-2 rounded-lg">
     Upload
   </button>
+  {uploadProgress > 0 && (
+  <div className="w-full bg-gray-700 h-3 rounded mt-3">
+    <div
+      className="bg-blue-500 h-full rounded transition-all duration-300"
+      style={{ width: `${uploadProgress}%` }}
+    ></div>
   </div>
+)}
+<p className="text-sm text-center mt-1 text-gray-400">
+  {uploadProgress > 0 && uploadProgress < 100 && `Uploading: ${uploadProgress}%`}
+  {uploadProgress === 100 && "Upload complete"}
+</p>
+  </div>
+
 </div>
 
         {uploadMessage && <p className="text-center mt-2 text-gray-400">{uploadMessage}</p>}
