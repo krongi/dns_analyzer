@@ -8,6 +8,7 @@ import re
 # RESULT_FOLDER = "/app/results"
 RESULT_FOLDER = "results"
 UPLOAD_FOLDER = "uploads"
+JSON_OUTPUT = "fail.json"
 
 if not os.path.exists(os.path.join(os.getcwd(), RESULT_FOLDER)):
     os.mkdir(RESULT_FOLDER)
@@ -15,11 +16,15 @@ if not os.path.exists(os.path.join(os.getcwd(), RESULT_FOLDER)):
 if not os.path.exists(os.path.join(os.getcwd(), UPLOAD_FOLDER)):
     os.mkdir(UPLOAD_FOLDER)
 
+if not os.path.exists(os.path.join(os.getcwd(), JSON_OUTPUT)):
+    with open(os.path.join(os.getcwd(), JSON_OUTPUT), 'w') as json_create:
+        json_create.writable()
+
 date_reg = re.compile(r'[A-z]{3} \d{2} \d{2}:\d{2}:\d{2}') # Run on each line of log first
 host_reg = re.compile(r'(?!\s){1}\w+(?=\s){1}') # Run this on the second half of the split line
 log_source_reg = re.compile(r'(?!\s){1}(\w+|\d+)(?=\[){1}')
 index_reg = re.compile(r'(?!\[){1}(\d+)(?=\]){1}')
-message_reg = re.compile(r'  \[\]\: ')
+message_reg = re.compile(r'  \[\]\: |\: ')
 position = os.getcwd()
 
 # log_file = sys.argv[1] if len(sys.argv) > 1 else "log.txt"
@@ -36,7 +41,7 @@ def parse_log():
     # result_filename = f"{log_file_name}_{timestamp}.json"
     # result_path = os.path.join(RESULT_FOLDER, result_filename)
 
-    with open("failog", 'r') as lf:
+    with open(os.path.join(os.getcwd(), "backend\\failog"), 'r') as lf:
         data_list = []
         for line in lf.readlines():
             print(line)
@@ -78,7 +83,7 @@ def parse_log():
             
             data = {"Date": line_date, "Host": line_host, "Source": line_source, "Message": line_message}
             data_list.append(data)
-    with open("fail.json", 'w+') as oj:
+    with open("fail.json", 'w') as oj:
         json.dump(data_list, oj, indent=4)
 
 parse_log()
