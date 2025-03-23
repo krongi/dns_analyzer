@@ -16,19 +16,19 @@ const App = () => {
 
   const API_BASE = "http://10.10.1.26:5000";
 
-  // ✅ Fetch list of processed result filenames ONCE when component mounts
+  // Fetch list of processed result filenames ONCE when component mounts
   useEffect(() => {
     fetchResults();
-  }, []); // ⬅ Dependency array ensures it runs only once
+  }, []); // Dependency array ensures it runs only once
 
-  // ✅ Fetch filenames from /results (previously processed analyses)
+  //  Fetch filenames from /results (previously processed analyses)
   const fetchResults = async () => {
     try {
         const response = await fetch(`${API_BASE}/results`);
         if (!response.ok) throw new Error("Failed to fetch results");
 
         const result = await response.json();
-        console.log("Fetched filenames:", result.files); // ✅ Debugging Output
+        console.log("Fetched filenames:", result.files); //  Debugging Output
         setUploadedFiles(result.files || []);
     } catch (error) {
         console.error("Error fetching results:", error);
@@ -45,7 +45,7 @@ const handleFileSelection = async (file) => {
         if (!response.ok) throw new Error("Failed to fetch file contents");
 
         const jsonData = await response.json();
-        setData(jsonData); // ✅ Store the selected file’s JSON for display
+        setData(jsonData); //  Store the selected files JSON for display
         console.log("Fetched data for:", file, jsonData); // Debugging Output
     } catch (error) {
         console.error("Error fetching file contents:", error);
@@ -77,7 +77,7 @@ const handleFileChange = (event) => {
   //     const result = await response.json();
   //     setUploadMessage(result.message);
   //     setFileUploaded(true);
-  //     // ✅ Refresh results after upload
+  //     //  Refresh results after upload
   //     fetchResults();
   //   } catch (error) {
   //     setUploadMessage("Upload error: " + error.message);
@@ -152,7 +152,7 @@ const handleFileChange = (event) => {
 
         // if (result.progress >= 100) {
         //   clearInterval(interval);
-        //   fetchResults(); // ✅ Refresh results after processing
+        //   fetchResults(); //  Refresh results after processing
         //   setProcessing(false);
         // }
         if (result.progress >= 100) {
