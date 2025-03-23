@@ -4,8 +4,16 @@ from datetime import datetime
 import sys
 import re
 
-UPLOAD_FOLDER = "/app/uploads"
-RESULT_FOLDER = "/app/results"
+# UPLOAD_FOLDER = "/app/uploads"
+# RESULT_FOLDER = "/app/results"
+RESULT_FOLDER = "results"
+UPLOAD_FOLDER = "uploads"
+
+if not os.path.exists(os.path.join(os.getcwd(), RESULT_FOLDER)):
+    os.mkdir(RESULT_FOLDER)
+
+if not os.path.exists(os.path.join(os.getcwd(), UPLOAD_FOLDER)):
+    os.mkdir(UPLOAD_FOLDER)
 
 date_reg = re.compile(r'[A-z]{3} \d{2} \d{2}:\d{2}:\d{2}') # Run on each line of log first
 host_reg = re.compile(r'(?!\s){1}\w+(?=\s){1}') # Run this on the second half of the split line
@@ -14,40 +22,63 @@ index_reg = re.compile(r'(?!\[){1}(\d+)(?=\]){1}')
 message_reg = re.compile(r'  \[\]\: ')
 position = os.getcwd()
 
-log_file = sys.argv[1] if len(sys.argv) > 1 else "log.txt"
-progress_file = "progress.json"
+# log_file = sys.argv[1] if len(sys.argv) > 1 else "log.txt"
+# progress_file = "progress.json"
 
-log_file_name = os.path.splitext(os.path.basename(log_file))[0]
-timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-result_filename = f"{log_file_name}_{timestamp}.json"
-result_path = os.path.join(RESULT_FOLDER, result_filename)
 
-with open(log_file_name, 'r') as lf:
-    for line in lf.readlines():
-        print(line)
 
-        line_date = date_reg.findall(line)[0]
-        chunks = date_reg.split(line)
-        new_chunk = ""
-        for chunk in chunks:
-            new_chunk += chunk
+def parse_log():
+    
+    # log_file = sys.argv[1] if len(sys.argv) > 1 else "log.txt"
+    # progress_file = "progress.json"
+    # log_file_name = os.path.splitext(os.path.basename(log_file))[0]
+    # timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    # result_filename = f"{log_file_name}_{timestamp}.json"
+    # result_path = os.path.join(RESULT_FOLDER, result_filename)
 
-        line_host = host_reg.findall(new_chunk)[0]
-        chunks = new_chunk.split(line_host)
-        new_chunk = ""
-        for chunk in chunks:
-            new_chunk += chunk
+    with open("failog", 'r') as lf:
+        data_list = []
+        for line in lf.readlines():
+            print(line)
 
-        line_source = log_source_reg.findall(new_chunk)[0]
-        chunks = new_chunk .split(line_source)
-        new_chunk = ""
-        for chunk in chunks:
-            new_chunk += chunk
+            line_date = date_reg.findall(line)[0]
+            chunks = date_reg.split(line)
+            new_chunk = ""
+            for chunk in chunks:
+                new_chunk += chunk
 
-        line_index = index_reg.findall(new_chunk)[0]
-        chunks = new_chunk.split(line_index)
-        new_chunk = ""
-        for chunk in chunks:
-            new_chunk += chunk
+            if not host_reg.findall(new_chunk):
+                line_host = "Null"
+            else:
+                line_host = host_reg.findall(new_chunk)[0]
+                chunks = new_chunk.split(line_host)
+                new_chunk = ""
+                for chunk in chunks:
+                    new_chunk += chunk
 
-        line_message = message_reg.split(new_chunk)[1]
+            if not log_source_reg.findall(new_chunk):
+                line_source = "Null"
+            else:
+                line_source = log_source_reg.findall(new_chunk)[0]
+                chunks = new_chunk .split(line_source)
+                new_chunk = ""
+                for chunk in chunks:
+                    new_chunk += chunk
+
+            if not index_reg.findall(new_chunk):
+                line_index = "Null"
+            else:
+                line_index = index_reg.findall(new_chunk)[0]
+                chunks = new_chunk.split(line_index)
+                new_chunk = ""
+                for chunk in chunks:
+                    new_chunk += chunk
+
+            line_message = message_reg.split(new_chunk)[1]
+            
+            data = {"Date": line_date, "Host": line_host, "Source": line_source, "Message": line_message}
+            data_list.append(data)
+    with open("fail.json", 'w+') as oj:
+        json.dump(data_list, oj, indent=4)
+
+parse_log()

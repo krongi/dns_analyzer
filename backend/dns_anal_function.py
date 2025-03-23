@@ -27,8 +27,16 @@ result_path = os.path.join(RESULT_FOLDER, result_filename)
 update_progress("processing", 0, "Initializing processing...")
 
 # Regex patterns
+date_reg = re.compile(r'[A-z]{3} \d{2} \d{2}:\d{2}:\d{2}') # Run on each line of log first
+host_reg = re.compile(r'(?!\s){1}\w+(?=\s){1}') # Run this on the second half of the split line
+log_source_reg = re.compile(r'(?!\s){1}(\w+|\d+)(?=\[){1}')
+index_reg = re.compile(r'(?!\[){1}(\d+)(?=\]){1}')
+message_reg = re.compile(r'  \[\]\: ')
 ip_regex = re.compile(r'(\d{1,3}\.){3}\d{1,3}$')
 sld_regex = re.compile(r'([^.]+\.[^.]+)$')
+
+# def is_dns_record(source):
+#     if source 
 
 def is_private_ip(ip):  
     private_patterns = [

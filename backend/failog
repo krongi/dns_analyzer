@@ -1,0 +1,247 @@
+Mar 23 00:00:03 localhost systemd[1]: rsyslog.service: Sent signal SIGHUP to main process 143 (rsyslogd) on client request.
+Mar 23 00:00:03 localhost systemd[1]: logrotate.service: Deactivated successfully.
+Mar 23 00:00:03 localhost systemd[1]: Finished Rotate log files.
+Mar 23 00:09:01 localhost CRON[435674]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 00:09:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 00:09:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 00:09:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 00:39:01 localhost CRON[436015]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 00:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 00:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 00:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 00:49:01 localhost CRON[436158]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 01:09:01 localhost CRON[436353]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 01:09:17 localhost systemd[1]: Starting Clean php session files...
+Mar 23 01:09:17 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 01:09:17 localhost systemd[1]: Finished Clean php session files.
+Mar 23 01:39:01 localhost CRON[436682]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 01:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 01:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 01:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 01:49:01 localhost CRON[436847]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 02:09:01 localhost CRON[437049]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 02:09:23 localhost systemd[1]: Starting Clean php session files...
+Mar 23 02:09:23 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 02:09:23 localhost systemd[1]: Finished Clean php session files.
+Mar 23 02:39:01 localhost CRON[437397]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 02:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 02:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 02:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 02:49:01 localhost CRON[437536]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 03:09:01 localhost CRON[437766]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 03:09:25 localhost systemd[1]: Starting Clean php session files...
+Mar 23 03:09:25 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 03:09:25 localhost systemd[1]: Finished Clean php session files.
+Mar 23 03:10:06 localhost systemd[1]: Starting Online ext4 Metadata Check for All Filesystems...
+Mar 23 03:10:06 localhost systemd[1]: e2scrub_all.service: Deactivated successfully.
+Mar 23 03:10:06 localhost systemd[1]: Finished Online ext4 Metadata Check for All Filesystems.
+Mar 23 03:24:01 localhost CRON[437936]: (root) CMD (test -e /run/systemd/system || SERVICE_MODE=1 /sbin/e2scrub_all -A -r)
+Mar 23 03:34:01 localhost CRON[438045]: (root) CMD (test -e /run/systemd/system || SERVICE_MODE=1 /usr/lib/x86_64-linux-gnu/e2fsprogs/e2scrub_all_cron)
+Mar 23 03:39:01 localhost CRON[438100]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 03:39:19 localhost systemd[1]: Starting Clean php session files...
+Mar 23 03:39:19 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 03:39:19 localhost systemd[1]: Finished Clean php session files.
+Mar 23 03:49:01 localhost CRON[438245]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 03:52:50 localhost systemd[1]: Starting Message of the Day...
+Mar 23 03:52:50 localhost systemd[1]: motd-news.service: Deactivated successfully.
+Mar 23 03:52:50 localhost systemd[1]: Finished Message of the Day.
+Mar 23 04:00:01 localhost CRON[438362]: (root) CMD (test -x /usr/sbin/cron-apt && /usr/sbin/cron-apt)
+Mar 23 04:09:00 localhost systemd[1]: Starting Clean php session files...
+Mar 23 04:09:00 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 04:09:00 localhost systemd[1]: Finished Clean php session files.
+Mar 23 04:09:01 localhost CRON[438506]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 04:21:01 localhost CRON[438643]: (root) CMD (   PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updateGravity >/var/log/pihole/pihole_updateGravity.log || cat /var/log/pihole/pihole_updateGravity.log)
+Mar 23 04:27:08 localhost systemd[1]: Starting Update APT News...
+Mar 23 04:27:08 localhost systemd[1]: Starting Update the local ESM caches...
+Mar 23 04:27:09 localhost systemd[1]: esm-cache.service: Deactivated successfully.
+Mar 23 04:27:09 localhost systemd[1]: Finished Update the local ESM caches.
+Mar 23 04:27:11 localhost cron-apt: CRON-APT RUN [/etc/cron-apt/config]: Sun Mar 23 04:00:01 UTC 2025
+Mar 23 04:27:11 localhost cron-apt: CRON-APT SLEEP: 1626, Sun Mar 23 04:27:07 UTC 2025
+Mar 23 04:27:11 localhost cron-apt: CRON-APT ACTION: 3-download
+Mar 23 04:27:12 localhost cron-apt: CRON-APT LINE: /usr/bin/apt-get -o quiet=1 dist-upgrade -d -y -o APT::Get::Show-Upgraded=true
+Mar 23 04:27:12 localhost cron-apt: Reading package lists...
+Mar 23 04:27:12 localhost cron-apt: Building dependency tree...
+Mar 23 04:27:12 localhost cron-apt: Reading state information...
+Mar 23 04:27:12 localhost cron-apt: Calculating upgrade...
+Mar 23 04:27:12 localhost cron-apt: The following packages will be upgraded:
+Mar 23 04:27:12 localhost cron-apt:   libcryptsetup12 libxslt1.1
+Mar 23 04:27:12 localhost cron-apt: 2 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Mar 23 04:27:12 localhost cron-apt: Need to get 0 B/375 kB of archives.
+Mar 23 04:27:12 localhost cron-apt: After this operation, 1024 B of additional disk space will be used.
+Mar 23 04:27:12 localhost cron-apt: Download complete and in download only mode
+Mar 23 04:27:13 localhost systemd[1]: apt-news.service: Deactivated successfully.
+Mar 23 04:27:13 localhost systemd[1]: Finished Update APT News.
+Mar 23 04:39:01 localhost CRON[439321]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 04:39:21 localhost systemd[1]: Starting Clean php session files...
+Mar 23 04:39:21 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 04:39:21 localhost systemd[1]: Finished Clean php session files.
+Mar 23 04:49:01 localhost CRON[439474]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 05:09:01 localhost CRON[439685]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 05:09:05 localhost systemd[1]: Starting Clean php session files...
+Mar 23 05:09:05 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 05:09:05 localhost systemd[1]: Finished Clean php session files.
+Mar 23 05:39:01 localhost CRON[440046]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 05:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 05:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 05:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 05:49:01 localhost CRON[440203]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 06:09:01 localhost CRON[440409]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 06:09:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 06:09:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 06:09:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 06:11:01 localhost CRON[440477]: (root) CMD (test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily ))
+Mar 23 06:15:26 localhost systemd[1]: Starting Daily apt upgrade and clean activities...
+Mar 23 06:15:26 localhost systemd[1]: apt-daily-upgrade.service: Deactivated successfully.
+Mar 23 06:15:26 localhost systemd[1]: Finished Daily apt upgrade and clean activities.
+Mar 23 06:36:01 localhost CRON[440782]: (root) CMD (test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly ))
+Mar 23 06:39:01 localhost CRON[440814]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 06:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 06:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 06:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 06:49:01 localhost CRON[440963]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 07:09:01 localhost CRON[441174]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 07:09:04 localhost systemd[1]: Starting Clean php session files...
+Mar 23 07:09:04 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 07:09:04 localhost systemd[1]: Finished Clean php session files.
+Mar 23 07:10:06 localhost systemd[1]: Starting Daily man-db regeneration...
+Mar 23 07:10:07 localhost systemd[1]: man-db.service: Deactivated successfully.
+Mar 23 07:10:07 localhost systemd[1]: Finished Daily man-db regeneration.
+Mar 23 07:39:01 localhost CRON[441508]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 07:39:18 localhost systemd[1]: Starting Clean php session files...
+Mar 23 07:39:18 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 07:39:18 localhost systemd[1]: Finished Clean php session files.
+Mar 23 07:49:01 localhost CRON[441644]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 08:09:01 localhost CRON[441846]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 08:09:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 08:09:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 08:09:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 08:39:01 localhost CRON[442165]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 08:39:24 localhost systemd[1]: Starting Clean php session files...
+Mar 23 08:39:24 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 08:39:24 localhost systemd[1]: Finished Clean php session files.
+Mar 23 08:49:01 localhost CRON[442308]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 09:09:01 localhost CRON[442510]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 09:09:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 09:09:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 09:09:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 09:39:01 localhost CRON[442835]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 09:39:19 localhost systemd[1]: Starting Clean php session files...
+Mar 23 09:39:19 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 09:39:19 localhost systemd[1]: Finished Clean php session files.
+Mar 23 09:49:01 localhost CRON[442976]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 10:09:01 localhost CRON[443182]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 10:09:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 10:09:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 10:09:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 10:39:01 localhost CRON[443549]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 10:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 10:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 10:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 10:49:01 localhost CRON[443682]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 11:09:01 localhost CRON[443887]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 11:09:16 localhost systemd[1]: Starting Clean php session files...
+Mar 23 11:09:16 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 11:09:16 localhost systemd[1]: Finished Clean php session files.
+Mar 23 11:13:18 localhost systemd[1]: Starting Daily apt download activities...
+Mar 23 11:13:18 localhost systemd[1]: apt-daily.service: Deactivated successfully.
+Mar 23 11:13:18 localhost systemd[1]: Finished Daily apt download activities.
+Mar 23 11:39:01 localhost CRON[444286]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 11:39:12 localhost systemd[1]: Starting Clean php session files...
+Mar 23 11:39:12 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 11:39:12 localhost systemd[1]: Finished Clean php session files.
+Mar 23 11:49:01 localhost CRON[444425]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 12:09:01 localhost CRON[444631]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 12:09:22 localhost systemd[1]: Starting Clean php session files...
+Mar 23 12:09:22 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 12:09:22 localhost systemd[1]: Finished Clean php session files.
+Mar 23 12:39:01 localhost CRON[444956]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 12:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 12:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 12:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 12:49:01 localhost CRON[445080]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 13:09:01 localhost CRON[445284]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 13:09:05 localhost systemd[1]: Starting Clean php session files...
+Mar 23 13:09:05 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 13:09:05 localhost systemd[1]: Finished Clean php session files.
+Mar 23 13:39:01 localhost CRON[445633]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 13:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 13:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 13:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 13:49:01 localhost CRON[445762]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 14:09:01 localhost CRON[445985]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 14:09:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 14:09:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 14:09:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 14:39:01 localhost CRON[446325]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 14:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 14:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 14:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 14:49:01 localhost CRON[446464]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 15:09:01 localhost CRON[446674]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 15:09:22 localhost systemd[1]: Starting Clean php session files...
+Mar 23 15:09:22 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 15:09:22 localhost systemd[1]: Finished Clean php session files.
+Mar 23 15:21:33 localhost systemd[1]: Starting Cleanup of Temporary Directories...
+Mar 23 15:21:33 localhost systemd[1]: systemd-tmpfiles-clean.service: Deactivated successfully.
+Mar 23 15:21:33 localhost systemd[1]: Finished Cleanup of Temporary Directories.
+Mar 23 15:39:01 localhost CRON[447005]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 15:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 15:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 15:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 15:49:01 localhost CRON[447154]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 16:09:01 localhost CRON[447350]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 16:09:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 16:09:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 16:09:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 16:39:01 localhost CRON[447681]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 16:39:08 localhost systemd[1]: Starting Clean php session files...
+Mar 23 16:39:08 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 16:39:08 localhost systemd[1]: Finished Clean php session files.
+Mar 23 16:49:01 localhost CRON[447836]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 17:09:01 localhost CRON[448059]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 17:09:22 localhost systemd[1]: Starting Clean php session files...
+Mar 23 17:09:22 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 17:09:22 localhost systemd[1]: Finished Clean php session files.
+Mar 23 17:39:01 localhost CRON[448384]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 17:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 17:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 17:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 17:49:01 localhost CRON[448532]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 18:09:01 localhost CRON[448742]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 18:09:13 localhost systemd[1]: Starting Clean php session files...
+Mar 23 18:09:13 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 18:09:13 localhost systemd[1]: Finished Clean php session files.
+Mar 23 18:39:01 localhost CRON[449076]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 18:39:10 localhost systemd[1]: Starting Clean php session files...
+Mar 23 18:39:10 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 18:39:10 localhost systemd[1]: Finished Clean php session files.
+Mar 23 18:49:01 localhost CRON[449211]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 19:09:01 localhost CRON[449413]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 19:09:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 19:09:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 19:09:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 19:17:01 localhost CRON[449549]: (root) CMD (   PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker)
+Mar 23 19:39:01 localhost CRON[449877]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 19:39:03 localhost systemd[1]: Starting Clean php session files...
+Mar 23 19:39:04 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 19:39:04 localhost systemd[1]: Finished Clean php session files.
+Mar 23 19:49:01 localhost CRON[450010]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 20:03:26 localhost systemd[1]: Starting Message of the Day...
+Mar 23 20:03:26 localhost systemd[1]: motd-news.service: Deactivated successfully.
+Mar 23 20:03:26 localhost systemd[1]: Finished Message of the Day.
+Mar 23 20:09:01 localhost CRON[450203]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 20:09:05 localhost systemd[1]: Starting Clean php session files...
+Mar 23 20:09:05 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 20:09:05 localhost systemd[1]: Finished Clean php session files.
+Mar 23 20:39:01 localhost CRON[450536]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 20:39:26 localhost systemd[1]: Starting Clean php session files...
+Mar 23 20:39:26 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 20:39:26 localhost systemd[1]: Finished Clean php session files.
+Mar 23 20:49:01 localhost CRON[450703]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Mar 23 21:09:01 localhost CRON[450919]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] && if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Mar 23 21:09:05 localhost systemd[1]: Starting Clean php session files...
+Mar 23 21:09:05 localhost systemd[1]: phpsessionclean.service: Deactivated successfully.
+Mar 23 21:09:05 localhost systemd[1]: Finished Clean php session files.
+Mar 23 21:20:53 localhost systemd[1]: Starting Daily apt download activities...
+Mar 23 21:20:53 localhost systemd[1]: apt-daily.service: Deactivated successfully.
+Mar 23 21:20:53 localhost systemd[1]: Finished Daily apt download activities.
