@@ -94,7 +94,7 @@ const handleFileChange = (event) => {
   
     const xhr = new XMLHttpRequest();
   
-    xhr.open("POST", "http://localhost:5000/upload", true);
+    xhr.open("POST", `${API_BASE}/upload`, true);
   
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable) {

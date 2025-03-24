@@ -28,12 +28,38 @@ update_progress("processing", 0, "Initializing processing...")
 
 # Regex patterns
 date_reg = re.compile(r'[A-z]{3} \d{2} \d{2}:\d{2}:\d{2}') # Run on each line of log first
-host_reg = re.compile(r'(?<=\d+ )\w+(?= \S+\:)') # Run this on the second half of the split line
-source_reg = re.compile(r'(?<=[A-z]{3} \d{2} \d{2}:\d{2}:\d{2} \S+ )\S+(?=\:)')
-pid_reg = re.compile(r'(?<=\[)\d+(?=\])')
-message_reg = re.compile(r'(?<=\: ).+')
+# host_reg = re.compile(r'(?<=\d+ )\w+(?= \S+\:)') # Run this on the second half of the split line
+host_reg = re.compile(r'(?<=\w{3} \d\d \d\d:\d\d:\d\d )\w+(?= \S+\:)')
+# source_reg = re.compile(r'(?<=[A-z]{3} \d{2} \d{2}:\d{2}:\d{2} \S+ )\S+(?=\:)')
+source_reg = re.compile(r'(?<=\w{3} \d\d \d\d\:\d\d\:\d\d )\w+(?= \S+\:)')
+# pid_reg = re.compile(r'(?<=\[)\d+(?=\])')
+pid_reg = re.compile(r'(?!\[)\d+(?=\])')
+
+split_to_source_reg = re.compile(r'\w+ \d\d \d\d:\d\d:\d\d \w+ ') #grabs everything up to the source column
+split_out_source_reg = re.compile(r'\[|:')
+
+message_split_reg = re.compile(r'[A-z]{3} \d\d \d\d:\d\d:\d\d \S+ \S+ ')
+
 ip_regex = re.compile(r'(\d{1,3}\.){3}\d{1,3}$')
 sld_regex = re.compile(r'([^.]+\.[^.]+)$')
+
+def get_log_date(log_line):
+    return date_reg.findall(log_line)[0]
+
+def get_log_host(log_line):
+    return host_reg.findall(log_line)[0]
+
+def get_log_source(log_line):
+    return split_out_source_reg.split(split_to_source_reg.split(log_line)[1])[0]
+
+def get_log_pid(log_line):
+    if not pid_reg.findall(log_line):
+        print("No PID for this entry\n")
+    else:
+        return pid_reg.findall(log_line)
+
+def get_log_message(log_line):
+    return message_split_reg.split(log_line)[1]
 
 def parse_log(source=log_file):
     with open(os.path.join(os.getcwd(), "backend/failog"), 'r') as lf:
