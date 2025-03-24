@@ -25,6 +25,8 @@ venv/
 # Flask runtime files
 backend/uploads/
 backend/results/
+frontend/uploads
+frontend/results
 backend/progress.json
 
 # Root-level artifacts

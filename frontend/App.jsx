@@ -14,7 +14,7 @@ const App = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
 
 
-  const API_BASE = "http://10.10.1.26:5000";
+  const API_BASE = "http://192.168.1.85:5000";
 
   // Fetch list of processed result filenames ONCE when component mounts
   useEffect(() => {
@@ -200,7 +200,6 @@ const handleFileChange = (event) => {
       <option key={index} value={file}>{file}</option>
     ))}
   </select>
-  <p>look im gay</p>
   <div className="flex flex-col items-center mb-6">
   <input
     type="file"

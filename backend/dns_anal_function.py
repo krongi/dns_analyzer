@@ -28,15 +28,60 @@ update_progress("processing", 0, "Initializing processing...")
 
 # Regex patterns
 date_reg = re.compile(r'[A-z]{3} \d{2} \d{2}:\d{2}:\d{2}') # Run on each line of log first
-host_reg = re.compile(r'(?!\s){1}\w+(?=\s){1}') # Run this on the second half of the split line
-log_source_reg = re.compile(r'(?!\s){1}(\w+|\d+)(?=\[){1}')
-index_reg = re.compile(r'(?!\[){1}(\d+)(?=\]){1}')
-message_reg = re.compile(r'  \[\]\: ')
+host_reg = re.compile(r'(?<=\d+ )\w+(?= \S+\:)') # Run this on the second half of the split line
+source_reg = re.compile(r'(?<=[A-z]{3} \d{2} \d{2}:\d{2}:\d{2} \S+ )\S+(?=\:)')
+pid_reg = re.compile(r'(?<=\[)\d+(?=\])')
+message_reg = re.compile(r'(?<=\: ).+')
 ip_regex = re.compile(r'(\d{1,3}\.){3}\d{1,3}$')
 sld_regex = re.compile(r'([^.]+\.[^.]+)$')
 
-# def is_dns_record(source):
-#     if source 
+def parse_log(source=log_file):
+    with open(os.path.join(os.getcwd(), "backend/failog"), 'r') as lf:
+        data_list = []
+        for line in lf.readlines():
+            print(line)
+            if source_reg.findall(line) == "dnsmasq":
+                print("dnsmasq log detected, changing functions")
+                dnsmasq_parse()
+            line_date = date_reg.findall(line)[0]
+            chunks = date_reg.split(line)
+            new_chunk = ""
+            for chunk in chunks:
+                new_chunk += chunk
+
+            if not host_reg.findall(new_chunk):
+                line_host = "Null"
+            else:
+                line_host = host_reg.findall(new_chunk)[0]
+                chunks = new_chunk.split(line_host)
+                new_chunk = ""
+                for chunk in chunks:
+                    new_chunk += chunk
+
+            if not source_reg.findall(new_chunk):
+                line_source = "Null"
+            else:
+                line_source = source_reg.findall(new_chunk)[0]
+                chunks = new_chunk .split(line_source)
+                new_chunk = ""
+                for chunk in chunks:
+                    new_chunk += chunk
+
+            if not pid_reg.findall(new_chunk):
+                line_index = "Null"
+            else:
+                line_index = pid_reg.findall(new_chunk)[0]
+                chunks = new_chunk.split(line_index)
+                new_chunk = ""
+                for chunk in chunks:
+                    new_chunk += chunk
+
+            line_message = message_reg.split(new_chunk)[1]
+            
+            data = {"Date": line_date, "Host": line_host, "Source": line_source, "Message": line_message}
+            data_list.append(data)
+    with open("fail.json", 'w') as oj:
+        json.dump(data_list, oj, indent=4)
 
 def is_private_ip(ip):  
     private_patterns = [
@@ -46,34 +91,37 @@ def is_private_ip(ip):
     ]
     return any(p.match(ip) for p in private_patterns)
 
-ips = set()
-domains = set()
+parse_log()
 
-update_progress("processing", 10, "Reading log file...")
+def dnsmasq_parse():
+    ips = set()
+    domains = set()
 
-with open(log_file, 'r') as file:
-    for line in file:
-        parts = line.strip().split(': ', 1)
-        if len(parts) < 2 or 'DHCP' in line:
-            continue
-        message = parts[1]
-        first_word = message.split(' ', 1)[0]
+    update_progress("processing", 10, "Reading log file...")
 
-        if first_word.startswith(('query', 'forwarded')):
-            potential_ip = message.rsplit(' ', 1)[-1]
-            if ip_regex.match(potential_ip) and not is_private_ip(potential_ip):
-                ips.add(potential_ip)
+    with open(log_file, 'r') as file:
+        for line in file:
+            parts = line.strip().split(': ', 1)
+            if len(parts) < 2 or 'DHCP' in line:
+                continue
+            message = parts[1]
+            first_word = message.split(' ', 1)[0]
 
-        elif first_word.startswith(('cached', 'reply')):
-            if any(keyword in message for keyword in ['NODATA', '<CNAME>', '<HTTPS>']):
-                domain = message.split(' ')[1]
+            if first_word.startswith(('query', 'forwarded')):
+                potential_ip = message.rsplit(' ', 1)[-1]
+                if ip_regex.match(potential_ip) and not is_private_ip(potential_ip):
+                    ips.add(potential_ip)
+
+            elif first_word.startswith(('cached', 'reply')):
+                if any(keyword in message for keyword in ['NODATA', '<CNAME>', '<HTTPS>']):
+                    domain = message.split(' ')[1]
+                    domains.add(domain)
+
+            elif first_word == 'gravity':
+                action, domain, _, ip = message.split(' ', 3)
                 domains.add(domain)
-
-        elif first_word == 'gravity':
-            action, domain, _, ip = message.split(' ', 3)
-            domains.add(domain)
-            if ip_regex.match(ip) and not is_private_ip(ip):
-                ips.add(ip)
+                if ip_regex.match(ip) and not is_private_ip(ip):
+                    ips.add(ip)
 
 update_progress("processing", 30, "Running dig queries...")
 
